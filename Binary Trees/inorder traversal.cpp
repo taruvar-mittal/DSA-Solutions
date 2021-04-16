@@ -54,7 +54,7 @@ public:
     }
     
     
-    // without recursion without stack
+    // without recursion without stack - Morris Traversal
      vector<int> inorderTraversal(TreeNode* root){
          vector<int> output;
          while(root){
