@@ -27,7 +27,7 @@ Diagonal Traversal of binary tree :
     Node* left, * right;
 }; */
 
-
+// method 1 
 vector<int> diagonal(Node *root)
 { vector<int> output;
   queue<Node*> pendingNodes;
@@ -43,4 +43,26 @@ vector<int> diagonal(Node *root)
       }
   }
   return output;
+}
+
+//method 2 - prefer more
+void findDistances(Node* root, int d, map<int,vector<int>> &helper){
+    if(root==NULL)
+    return;
+    
+    helper[d].push_back(root->data);
+    findDistances(root->left,d+1,helper);
+    findDistances(root->right,d,helper);
+}
+vector<int> diagonal(Node *root)
+{
+    vector<int> output;
+    map<int,vector<int>> helper;
+    findDistances(root,0,helper);
+    for(auto m:helper){
+       for(int i=0;i<m.second.size();i++){
+           output.push_back(m.second[i]);
+       }
+    }
+    return output;
 }
