@@ -21,6 +21,8 @@ Input : arr[] = {5, 1, 9, 2, 5, 1, 7}
 Output : 1
 */
 
+/***** EQUAL WAALA CASE HANDLE NAHI KIYA HUA *****/
+
 class Solution{
     public:
 
