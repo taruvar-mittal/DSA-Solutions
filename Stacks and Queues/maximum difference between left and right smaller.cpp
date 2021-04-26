@@ -21,11 +21,10 @@ Input : arr[] = {5, 1, 9, 2, 5, 1, 7}
 Output : 1
 */
 
-/***** EQUAL WAALA CASE HANDLE NAHI KIYA HUA *****/
 
 class Solution{
     public:
-
+    /*You are required to complete this method */
     int findMaxDiff(int A[], int n)
     {
         vector<int> leftsmaller(n,-1);
@@ -40,11 +39,14 @@ class Solution{
                      rightsmaller[st.top()] = i;
                     int temp = st.top();
                     st.pop();
-                    // left smaller element is just the one below it in the stack
                     if(!st.empty())
                       leftsmaller[temp] = st.top();
                 }
-                st.push(i);
+                // to handle equal valued elements
+                if(!st.empty() && (A[i] == A[st.top()]))
+                 st.pop();
+                 
+                  st.push(i);
             }  
         }
         while(st.size()>1){
