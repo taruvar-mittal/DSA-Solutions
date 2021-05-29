@@ -34,6 +34,7 @@ Output: 0
 Explanation: [0,0] is the only stone on the plane, so you cannot remove it.
 */
 
+// Method 1 - merging stones!
 class Solution
 {
 public:
@@ -86,5 +87,56 @@ public:
             }
         }
         return n - numstones;
+    }
+};
+
+// method 2 - merging rows and columns - MORE EFFICIENT
+//taking row as row and column as -column-1 for mapping
+class Solution
+{
+public:
+    int find(unordered_map<int, int> &parent, int x)
+    {
+        if (parent[x] == x)
+            return x;
+        int temp = find(parent, parent[x]);
+        parent[x] = temp;
+        return temp;
+    }
+
+    void merge(unordered_map<int, int> &parent, int row, int col, int &count)
+    {
+        int por = find(parent, row);
+        int poc = find(parent, col);
+
+        if (por == poc)
+            return;
+
+        count--;
+        parent[por] = poc;
+    }
+
+    int removeStones(vector<vector<int>> &stones)
+    {
+        unordered_map<int, int> parent;
+        int count = 0;
+
+        for (auto v : stones)
+        {
+            int row = v[0];
+            int col = v[1];
+            if (parent.find(row) == parent.end())
+            {
+                parent[row] = row;
+                count++;
+            }
+            if (parent.find(-col - 1) == parent.end())
+            {
+                parent[-col - 1] = -col - 1;
+                count++;
+            }
+            merge(parent, row, -col - 1, count);
+        }
+        return stones.size() - count;
     }
 };
