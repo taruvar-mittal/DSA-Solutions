@@ -30,12 +30,10 @@ public:
     //     int n = nums.size();
     //     vector<int> lis(n,1);
     //     for(int i=1;i<n;i++){
-    //         int curr = lis[i];
     //         for(int j=0;j<i;j++){
     //             if(nums[j]<nums[i])
-    //              curr = max(curr,lis[i]+lis[j]);
+    //              lis[i] = max(lis[i],1+lis[j]);
     //         }
-    //         lis[i] = curr;
     //     }
     //     int output = INT_MIN;
     //     for(int i=0;i<n;i++){
@@ -43,7 +41,6 @@ public:
     //     }
     //     return output;
     // }
-
 
     // O(nlogn)
     int lengthOfLIS(vector<int> &nums)
