@@ -20,20 +20,47 @@ Input: nums = [2,3,0,1,4]
 Output: 2
 */
 
+dp:-
+class Solution
+{
+public:
+    int jump(vector<int> &nums)
+    {
+        int n = nums.size();
+        vector<int> dp(n, INT_MAX);
+        dp[0] = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int k = 1; k <= nums[i]; k++)
+            {
+                if (i + k < n)
+                    dp[i + k] = min(dp[i + k], dp[i] + 1);
+            }
+        }
+
+        return dp[n - 1];
+    }
+};
+
+
+greedy:-
 class Solution {
 public:
     int jump(vector<int>& nums) {
         int n = nums.size();
-        vector<int> steps(n,INT_MAX);
-        steps[0] = 0;
-        for(int i=0;i<n;i++){
-            for(int j=min(n-1,i+nums[i]);j>i;j--){
-                if(steps[j]>steps[i]+1)
-                    steps[j] = steps[i]+1;
-                else
-                    break;
+        int jumps = 0;
+        int nextmaxidx = 0;
+        int cmaxidx = 0;
+        int i=0;
+        while(cmaxidx<n-1){
+            nextmaxidx = max(nextmaxidx,i+nums[i]);
+            if(i==cmaxidx){
+                cmaxidx = nextmaxidx;
+                jumps++;
             }
+            i++;
         }
-        return steps[n-1];
+        return jumps;
     }
 };
