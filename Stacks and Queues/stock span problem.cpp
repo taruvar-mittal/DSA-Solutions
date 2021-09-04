@@ -1,8 +1,8 @@
 /*
 GeeksforGeeks - stock Span Problem - variation of next greater element on the left
 ques:-
-The stock span problem is a financial problem where we have a series of n daily price quotes for a stock and we need to calculate the span of stock’s price for all n days. 
-The span Si of the stock’s price on a given day i is defined as the maximum number of consecutive days just before the given day, for which the price of the stock on the current day is less than or equal to its price on the given day.
+The stock span problem is a financial problem where we have a series of n daily price quotes for a stock and we need to calculate the span of stockï¿½s price for all n days. 
+The span Si of the stockï¿½s price on a given day i is defined as the maximum number of consecutive days just before the given day, for which the price of the stock on the current day is less than or equal to its price on the given day.
 For example, if an array of 7 days prices is given as {100, 80, 60, 70, 60, 75, 85}, then the span values for corresponding 7 days are {1, 1, 1, 2, 1, 4, 6}.
 
 Example 1:
@@ -39,15 +39,11 @@ class Solution{
         vector<int> output(n,1);
         stack<int> st;
         for(int i=n-1;i>=0;i--){
-            if(st.empty()||price[i]<=price[st.top()])
-              st.push(i);
-            else{
                 while(!st.empty() && price[i]>price[st.top()]){
                     output[st.top()] = st.top()-i;
                     st.pop();
                 }
                 st.push(i);
-            }  
         }
         while(!st.empty()){
             output[st.top()] = st.top()+1;

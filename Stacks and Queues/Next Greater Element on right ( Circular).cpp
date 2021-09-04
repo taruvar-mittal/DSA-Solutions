@@ -46,3 +46,37 @@ public:
         return output;
     }
 };
+
+
+// another approach - not good
+class Solution {
+public:
+    vector<int> nextGreaterElements(vector<int>& arr) {
+        if(arr.size()==0) return {};
+        
+        vector<int> nums = arr;
+        nums.insert(nums.end(), arr.begin(),arr.end());
+        
+        vector<int> output(nums.size());
+        stack<int> st;
+        
+        for(int i=0;i<nums.size();i++){
+            while(!st.empty() && nums[st.top()]<nums[i]){
+                output[st.top()] = nums[i];
+                st.pop();
+            }
+            st.push(i);
+        }
+        
+        while(!st.empty()){
+            output[st.top()] = -1;
+            st.pop();
+        }
+        
+        vector<int> res;
+        for(int i=0;i<arr.size();i++){
+            res.push_back(output[i]);
+        }
+        return res;
+    }
+};

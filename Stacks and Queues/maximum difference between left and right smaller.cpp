@@ -32,9 +32,6 @@ class Solution{
         
         stack<int> st;
         for(int i=0;i<n;i++){
-            if(st.empty()||A[i]>A[st.top()])
-              st.push(i);
-            else{
                 while(!st.empty() && A[i]<A[st.top()]){
                      rightsmaller[st.top()] = i;
                     int temp = st.top();
@@ -46,15 +43,16 @@ class Solution{
                 if(!st.empty() && (A[i] == A[st.top()]))
                  st.pop();
                  
-                  st.push(i);
-            }  
+            st.push(i);  
         }
         while(st.size()>1){
            int temp = st.top();
            st.pop();
            leftsmaller[temp] = st.top();
         }
+
         int maxdiff = INT_MIN;
+        
         for(int i=0;i<n;i++){
         if(leftsmaller[i] == -1 && rightsmaller[i] == -1)
             maxdiff = max(maxdiff,0);
@@ -67,5 +65,37 @@ class Solution{
     
         }
         return maxdiff;
+    }
+};
+
+// another approach but kuch error hai - gfg pe kuch cases not passing
+class Solution{
+    public:
+    /*You are required to complete this method */
+    int findMaxDiff(int A[], int n)
+    {
+      stack<int> st;
+      int nser = 0;
+      int nsel = 0;
+      int omax = 0;
+      
+      for(int i=0;i<n;i++){
+          while(!st.empty() && A[st.top()]>A[i]){
+              nser = A[i];
+              st.pop();
+              if(!st.empty()) nsel = A[st.top()];
+              
+              omax = max(omax,nser-nsel);
+          }
+          st.push(i);
+      }
+      
+    // st.pop();
+      while(st.size()>1){
+          omax = max(omax,A[st.top()]);
+          st.pop();
+      }
+      
+      return omax;
     }
 };
