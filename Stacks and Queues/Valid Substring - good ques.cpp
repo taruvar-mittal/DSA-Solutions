@@ -21,26 +21,23 @@ substring is "()(())". Length = 6.
 class Solution {
   public:
     int findMaxLen(string s) {
-        int maxlength = 0;
         stack<pair<char,int>> st;
+        int ans = 0;
+        
         for(int i=0;i<s.length();i++){
-            if(s[i]=='('){
-                st.push(make_pair('(',i));
-            }else{
-                if(st.empty() || st.top().first==')'){
-                    st.push(make_pair(')',i));
-                }else{
-                    pair<char,int> p = st.top();
+            char c = s[i];
+            if(c=='(') st.push({c,i});
+            else{
+                if(st.empty()) st.push({c,i});
+                else if(st.top().first=='('){
                     st.pop();
-                    if(st.empty())
-                     maxlength = i+1;
-                    else{
-                        maxlength = max(maxlength,i-st.top().second);
-                    }
-                     
-                }
+                    if(st.empty()) ans = max(ans,i+1);
+                    else ans = max(ans,i-st.top().second);
+                }else 
+                   st.push({c,i});
             }
         }
-        return maxlength;
+        
+        return ans;
     }
 };
