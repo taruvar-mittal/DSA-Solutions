@@ -67,3 +67,25 @@ public:
         return start+1;
     }
 };
+
+
+// another apporach
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        int csum = 0;
+        int cmin = INT_MAX;
+        int ansidx = -1;
+        
+        for(int i=0;i<gas.size();i++){
+            csum+=(gas[i]-cost[i]);
+            if(cmin>csum){
+                cmin = csum;
+                ansidx = i;
+            }
+        }
+        
+        if(csum<0) return -1;
+        return (ansidx+1)%gas.size();
+    }
+};
